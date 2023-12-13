@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title th:text="${title}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link th:include="/components/header.html" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let tableRows = document.querySelectorAll(".table-row-clickable");
+
+            tableRows.forEach(function (row) {
+                row.addEventListener("click", function () {
+                    let roomId = row.getAttribute("data-room-id");
+                    window.location.href = "/calendar/" + roomId;
+                });
+            });
+        });
+    </script>
+</head>
+<style>
+    td:hover {
+        background-color: #ddd;
+    }
+</style>
+<body>
+    <div class="container mt-3">
+        <h1 class="display-4 text-center">Hotel Rooms</h1>
+        <table class="table table-bordered text-center">
+            <thead class="table-dark">
+            <tr>
+                <th>Room ID</th>
+                <th>Number</th>
+                <th>Capacity</th>
+                <th>Class Room</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="r : ${rooms}" class="table-row-clickable" th:attr="data-room-id=${r.Room_ID}">
+                <td th:text="${r.Room_ID}"></td>
+                <td th:text="${r.number}"></td>
+                <td th:text="${r.capacity}"></td>
+                <td th:text="${r.class_Room}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <link th:include="/components/footer.html" />
+</body>
+</html>
